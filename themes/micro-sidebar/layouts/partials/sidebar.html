@@ -1,0 +1,20 @@
+<aside class="sidebar" role="complementary">
+  <div class="sidebar-inner">
+    <header class="site-meta">
+      <a class="site-title" href="{{ "/" | relURL }}">{{ site.Title }}</a>
+
+      {{/* Subtitle/tagline lives in [params] subtitle. */}}
+      {{ with site.Params.subtitle }}
+        <p class="site-subtitle">{{ . }}</p>
+      {{ end }}
+    </header>
+
+    <nav class="site-nav" aria-label="Primary navigation">
+      <a class="nav-link" href="{{ "/" | relURL }}">Home</a>
+
+      {{ range site.Menus.main }}
+        <a class="nav-link" href="{{ .URL | relURL }}">{{ .Name }}</a>
+      {{ end }}
+    </nav>
+  </div>
+</aside>

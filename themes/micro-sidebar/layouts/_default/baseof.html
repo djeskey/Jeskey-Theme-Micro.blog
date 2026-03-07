@@ -1,0 +1,20 @@
+<!doctype html>
+<html lang="{{ site.Language.Lang | default "en" }}">
+  <head>
+    {{ partial "head.html" . }}
+  </head>
+  <body>
+    <div class="layout">
+      {{ partial "sidebar.html" . }}
+
+      <main class="content" id="main-content">
+        {{ block "main" . }}{{ end }}
+      </main>
+    </div>
+
+    {{/* Micro.blog-specific footer hooks are included only if available. */}}
+    {{ if templates.Exists "partials/microblog_after_footer.html" }}
+      {{ partial "microblog_after_footer.html" . }}
+    {{ end }}
+  </body>
+</html>

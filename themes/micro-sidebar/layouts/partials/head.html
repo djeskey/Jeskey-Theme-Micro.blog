@@ -1,0 +1,17 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>
+  {{ if .IsHome }}
+    {{ site.Title }}
+  {{ else }}
+    {{ if .Title }}{{ .Title }} | {{ end }}{{ site.Title }}
+  {{ end }}
+</title>
+
+<link rel="stylesheet" href="{{ "css/style.css" | relURL }}">
+
+{{/* Optional Micro.blog head hook. */}}
+{{ if templates.Exists "partials/microblog_head.html" }}
+  {{ partial "microblog_head.html" . }}
+{{ end }}
