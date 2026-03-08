@@ -157,6 +157,21 @@ a:focus {
   font-weight: 600;
 }
 
+.pagination {
+  margin-top: 1.5rem;
+  display: flex;
+  gap: 0.8rem;
+}
+
+.pagination-link {
+  display: inline-block;
+  background: #fff;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.5rem 0.8rem;
+  text-decoration: none;
+}
+
 /* Mobile: stack sidebar above content */
 @media (max-width: 900px) {
   .layout {
