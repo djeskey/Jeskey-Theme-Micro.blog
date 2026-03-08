@@ -1,24 +1,17 @@
 {{/*
   Home feed strategy:
-  1) Prefer main sections.
-  2) If missing, exclude standalone pages.
-  3) Fallback to all regular pages.
+  - Include all regular content entries.
+  - Exclude standalone pages (about/archive/etc).
+  - Sort newest first and cap home to 10 items.
 */}}
 {{ $pages := .Pages }}
 
 {{ if .IsHome }}
-  {{ $pages = where site.RegularPages "Section" "in" site.MainSections }}
-
-  {{ if eq (len $pages) 0 }}
-    {{ $pages = where site.RegularPages "Type" "ne" "page" }}
-  {{ end }}
+  {{ $pages = where site.RegularPages "Type" "ne" "page" }}
 
   {{ if eq (len $pages) 0 }}
     {{ $pages = site.RegularPages }}
   {{ end }}
-
-  {{ $excluded := slice "/about/" "/archive/" "/replies/" }}
-  {{ $pages = where $pages "RelPermalink" "not in" $excluded }}
 {{ end }}
 
 {{ $pages = $pages.ByDate.Reverse }}
