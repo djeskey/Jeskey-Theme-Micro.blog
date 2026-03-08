@@ -6,6 +6,8 @@
     {{ if eq (len $pages) 0 }}
       {{ $pages = site.RegularPages }}
     {{ end }}
+    {{ $excluded := slice "/about/" "/archive/" "/replies/" }}
+    {{ $pages = where $pages "RelPermalink" "not in" $excluded }}
   {{ else }}
     {{ $pages = $pages.ByDate.Reverse }}
   {{ end }}
