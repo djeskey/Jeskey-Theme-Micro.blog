@@ -1,0 +1,53 @@
+{{/*
+  Home feed strategy:
+  1) Prefer main sections.
+  2) If missing, exclude standalone pages.
+  3) Fallback to all regular pages.
+*/}}
+{{ $pages := .Pages }}
+
+{{ if .IsHome }}
+  {{ $pages = where site.RegularPages "Section" "in" site.MainSections }}
+
+  {{ if eq (len $pages) 0 }}
+    {{ $pages = where site.RegularPages "Type" "ne" "page" }}
+  {{ end }}
+
+  {{ if eq (len $pages) 0 }}
+    {{ $pages = site.RegularPages }}
+  {{ end }}
+
+  {{ $excluded := slice "/about/" "/archive/" "/replies/" }}
+  {{ $pages = where $pages "RelPermalink" "not in" $excluded }}
+{{ end }}
+
+{{ $pages = $pages.ByDate.Reverse }}
+{{ if .IsHome }}
+  {{/* Keep the homepage clean: latest 10 posts only. */}}
+  {{ $pages = first 10 $pages }}
+{{ end }}
+
+{{ range $pages }}
+  <article class="post-card">
+    <header class="post-header">
+      {{ if .Title }}
+        <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Title }}</a></h2>
+      {{ else }}
+        <h2 class="post-title"><a href="{{ .RelPermalink }}">{{ .Date | time.Format ":date_long" }}</a></h2>
+      {{ end }}
+      <time class="post-date" datetime="{{ .Date.Format "2006-01-02" }}">{{ .Date | time.Format ":date_medium" }}</time>
+    </header>
+
+    <div class="post-summary">
+      {{ if .Summary }}
+        {{ .Summary }}
+      {{ else }}
+        {{ .Content }}
+      {{ end }}
+    </div>
+
+    {{ if .Truncated }}
+      <p><a class="read-more" href="{{ .RelPermalink }}">Read more</a></p>
+    {{ end }}
+  </article>
+{{ end }}

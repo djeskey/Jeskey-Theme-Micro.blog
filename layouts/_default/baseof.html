@@ -12,7 +12,7 @@
       </main>
     </div>
 
-    {{/* Micro.blog-specific footer hooks are included only if available. */}}
+    {{/* Optional Micro.blog hook. */}}
     {{ if templates.Exists "partials/microblog_after_footer.html" }}
       {{ partial "microblog_after_footer.html" . }}
     {{ end }}

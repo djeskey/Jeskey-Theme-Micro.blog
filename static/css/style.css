@@ -157,12 +157,6 @@ a:focus {
   font-weight: 600;
 }
 
-.pagination {
-  margin-top: 1.5rem;
-  display: flex;
-  gap: 1rem;
-}
-
 /* Mobile: stack sidebar above content */
 @media (max-width: 900px) {
   .layout {
