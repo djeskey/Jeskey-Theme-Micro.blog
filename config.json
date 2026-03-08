@@ -1,0 +1,26 @@
+{
+  "baseURL": "https://civicpassport.com/",
+  "languageCode": "en-us",
+  "title": "Civic Passport",
+  "params": {
+    "subtitle": "Ideas Crossing Borders",
+    "author": {
+      "name": "Daniel Jeskey",
+      "site": "https://civicpassport.com/"
+    }
+  },
+  "menu": {
+    "main": [
+      {
+        "name": "Archive",
+        "url": "/archive/",
+        "weight": 10
+      },
+      {
+        "name": "About",
+        "url": "/about/",
+        "weight": 20
+      }
+    ]
+  }
+}
