@@ -1,0 +1,29 @@
+{{- $pages := where site.RegularPages "Type" "ne" "page" -}}
+{{- $pages = first 50 ($pages.ByDate.Reverse) -}}
+{
+  "version": "https://jsonfeed.org/version/1.1",
+  "title": {{ site.Title | jsonify }},
+  "home_page_url": {{ site.BaseURL | jsonify }},
+  "feed_url": {{ ("/index.json" | absURL) | jsonify }},
+  "description": {{ with site.Params.subtitle }}{{ . | jsonify }}{{ else }}{{ site.Title | jsonify }}{{ end }},
+  "items": [
+    {{- range $i, $p := $pages -}}
+      {{- if gt $i 0 }},{{ end }}
+      {{- $itemTitle := $p.Title -}}
+      {{- if eq $itemTitle "" -}}
+        {{- $itemTitle = $p.Date | time.Format ":date_long" -}}
+      {{- end -}}
+      {{- $content := $p.Summary | plainify -}}
+      {{- if eq $content "" -}}
+        {{- $content = $p.Plain -}}
+      {{- end -}}
+      {
+        "id": {{ $p.Permalink | jsonify }},
+        "url": {{ $p.Permalink | jsonify }},
+        "title": {{ $itemTitle | jsonify }},
+        "content_text": {{ $content | jsonify }},
+        "date_published": {{ $p.Date.Format "2006-01-02T15:04:05Z07:00" | jsonify }}
+      }
+    {{- end -}}
+  ]
+}

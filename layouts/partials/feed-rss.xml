@@ -1,0 +1,35 @@
+{{- $title := site.Title -}}
+{{- if and .Title (ne .Title site.Title) -}}
+  {{- $title = printf "%s | %s" .Title site.Title -}}
+{{- end -}}
+
+{{- $pages := .RegularPages -}}
+{{- if .IsHome -}}
+  {{- $pages = where site.RegularPages "Type" "ne" "page" -}}
+{{- end -}}
+{{- $pages = first 50 ($pages.ByDate.Reverse) -}}
+
+{{- printf "<?xml version=\"1.0\" encoding=\"utf-8\" standalone=\"yes\"?>" | safeHTML }}
+<rss version="2.0">
+  <channel>
+    <title>{{ $title }}</title>
+    <link>{{ .Permalink }}</link>
+    <description>{{ with site.Params.subtitle }}{{ . }}{{ else }}{{ site.Title }}{{ end }}</description>
+    <generator>Hugo</generator>
+    {{ with site.Params.author.name }}<managingEditor>{{ . }}</managingEditor>{{ end }}
+
+    {{ range $pages }}
+      {{- $itemTitle := .Title -}}
+      {{- if eq $itemTitle "" -}}
+        {{- $itemTitle = .Date | time.Format ":date_long" -}}
+      {{- end -}}
+      <item>
+        <title>{{ $itemTitle }}</title>
+        <link>{{ .Permalink }}</link>
+        <guid>{{ .Permalink }}</guid>
+        <pubDate>{{ .Date.Format "Mon, 02 Jan 2006 15:04:05 -0700" }}</pubDate>
+        <description>{{ .Summary | plainify | htmlEscape }}</description>
+      </item>
+    {{ end }}
+  </channel>
+</rss>

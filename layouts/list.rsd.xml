@@ -1,0 +1,8 @@
+{{- printf "<?xml version=\"1.0\" encoding=\"UTF-8\"?>" | safeHTML }}
+<rsd version="1.0" xmlns="http://archipelago.phrasewise.com/rsd">
+  <service>
+    <engineName>Hugo</engineName>
+    <engineLink>https://gohugo.io/</engineLink>
+    <homePageLink>{{ site.BaseURL }}</homePageLink>
+  </service>
+</rsd>
