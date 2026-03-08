@@ -1,3 +1,10 @@
 {{ define "main" }}
-  {{ partial "post-list.html" . }}
+  {{ $pages := where site.RegularPages "Type" "ne" "page" }}
+  {{ if eq (len $pages) 0 }}
+    {{ $pages = site.RegularPages }}
+  {{ end }}
+
+  {{ $paginator := .Paginate ($pages.ByDate.Reverse) 10 }}
+  {{ partial "post-list.html" (dict "pages" $paginator.Pages) }}
+  {{ partial "pagination.html" $paginator }}
 {{ end }}
